@@ -22,3 +22,10 @@ Combine the two parts of the mesh togther.
 Calculate normals to get correct lighting
 Create the material and specify to use the URP shader.
 Test end result by entering play mode.
+
+Task 2 Process
+
+Created new scene.
+Duplicated existing mesh creation.
+Realised that a base class would be benificial as both mesh generation use similar code.
+Added colour and position values to newly generated object.
