@@ -160,7 +160,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 56034946}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d293ec1127392514abaa7fba2124cce2, type: 3}
+  m_Script: {fileID: 11500000, guid: 756b27859f06aae4fab1d630b0191aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   useAnimation: 1
@@ -173,6 +173,9 @@ MonoBehaviour:
   coneHeight: 0.5
   coneRadius: 0.25
   coneSections: 16
+  targetObject: {fileID: 240994739}
+  useRotation: 1
+  rotationSpeed: {x: 100, y: 100, z: 100}
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,7 +338,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 240994736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e190ef40d04fda04da3ad1f28ab2391f, type: 3}
+  m_Script: {fileID: 11500000, guid: be49bfd9992695541b3e5ec8c1f94d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   useAnimation: 1

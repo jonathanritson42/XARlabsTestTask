@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class LissajousAnimation : MonoBehaviour
+public class LissajousAnimationTask4 : MonoBehaviour
 {
     [Header("X coordinates")]
 
