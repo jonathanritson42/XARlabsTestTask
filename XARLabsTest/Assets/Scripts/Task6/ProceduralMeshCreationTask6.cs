@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ProceduralMeshCreationTask5 : BaseMeshCreationTask5
+public class ProceduralMeshCreationTask6 : BaseMeshCreationTask6
 {
 
     [Header("Cone")]
@@ -18,7 +18,7 @@ public class ProceduralMeshCreationTask5 : BaseMeshCreationTask5
 
     [Header("Rotation")]
 
-    [SerializeField] protected SecondaryObjectMeshCreationTask5 targetObject;
+    [SerializeField] protected SecondaryObjectMeshCreationTask6 targetObject;
 
     [SerializeField] protected bool useRotation;
 
@@ -31,6 +31,19 @@ public class ProceduralMeshCreationTask5 : BaseMeshCreationTask5
     [SerializeField] protected Color backwardColour = Color.blue;
 
 
+    [Header("Perlin Noise")]
+
+    [SerializeField] protected bool useNoise;
+    [SerializeField] protected float displacementValue;
+    [SerializeField] protected float noiseValue;
+
+    private Mesh generatedCustomMesh;
+    private Mesh perlinNoiseMesh;
+    private Vector3[] originalVertices;
+    private Vector3[] originalNormals;
+    private float currentDisplacement;
+
+
     private GameObject generatedObject;
     public GameObject GeneratedObject => generatedObject;
     private MeshRenderer generatedObjectRenderer;
@@ -38,6 +51,10 @@ public class ProceduralMeshCreationTask5 : BaseMeshCreationTask5
     protected void Start() {
 
         GenerateObject();
+
+        if (!useNoise) return;
+
+        GenerateNoise();
     }
 
     protected void Update()
@@ -51,6 +68,7 @@ public class ProceduralMeshCreationTask5 : BaseMeshCreationTask5
         generatedObjectRenderer.material.color = Vector3.Dot(generatedObject.transform.forward, directionToGenerated) > 0 ? forwardColour : backwardColour;
 
         if (!useRotation) return;
+        
 
         Vector3 direction = targetObject.GeneratedObject.transform.position - generatedObject.transform.position;
 
@@ -77,7 +95,7 @@ public class ProceduralMeshCreationTask5 : BaseMeshCreationTask5
         generatedObject.name = "Object A";
 
         // Creating mesh
-        Mesh generatedCustomMesh = new Mesh();
+        generatedCustomMesh = new Mesh();
         generatedCustomMesh.name = "ObjectAMesh";
 
         CreateCombinedMesh(generatedCustomMesh);
@@ -126,8 +144,10 @@ public class ProceduralMeshCreationTask5 : BaseMeshCreationTask5
         customMesh.vertices = combinedVertices;
         customMesh.triangles = combinedTriangles;
         customMesh.normals = normals;
+
+        customMesh.RecalculateNormals();
     }
-    
+
     private Vector3[] GenerateConeVertices() {
 
         // Base vertices + tip + center
@@ -180,5 +200,27 @@ public class ProceduralMeshCreationTask5 : BaseMeshCreationTask5
         }
 
         return triangles;
+    }
+
+    private void GenerateNoise() {
+
+        originalVertices = generatedCustomMesh.vertices;
+        originalNormals = generatedCustomMesh.normals;
+        perlinNoiseMesh = Instantiate(generatedCustomMesh);
+        generatedObject.GetComponent<MeshFilter>().mesh = perlinNoiseMesh;
+
+        Vector3[] newVertices = new Vector3[generatedCustomMesh.vertices.Length];
+
+        for (int i = 0; i < newVertices.Length; i++)
+        {
+            float noiseAmount = Mathf.PerlinNoise(originalVertices[i].x * noiseValue, originalVertices[i].z * noiseValue);
+
+            float vertexDisplacement = displacementValue * noiseAmount;
+
+            newVertices[i] = originalVertices[i] + (originalNormals[i] * vertexDisplacement);
+        }
+
+        perlinNoiseMesh.vertices = newVertices;
+        perlinNoiseMesh.RecalculateBounds();
     }
 }

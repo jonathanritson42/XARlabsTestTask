@@ -57,3 +57,16 @@ Used MoveTowardsAngle as it's smoother and easily allows for finer controls over
 Task 5 Process
 
 Added colour change to happen before rotation to allow to slightly better optimise the update loop.
+Found the correect direction from Object B from Object A
+Normalsed the value to get the direction.
+Used Dot product to find out if in front or behind.
+Set colour depending on positive or negative.
+
+
+Task 6 Process
+
+Setup new mesh that clones original
+For each vertices use Perlin Noise to get the ammount of noise by specified value, then displace it.
+Apply this to each vertices 
+Then apply this to the cloned mesh
+Recalculate bounds to make sure the bounding volume is correct.
