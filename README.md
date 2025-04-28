@@ -53,3 +53,7 @@ Add follow Object selection in inspector and use Vector3 for angle speed control
 Initially set up rotate towards using transform.position rather than the generated object and needed to change to generatedObject.transform.position.
 Used MoveTowardsAngle as it's smoother and easily allows for finer controls over specific speeds.
 
+
+Task 5 Process
+
+Added colour change to happen before rotation to allow to slightly better optimise the update loop.

@@ -1,10 +1,11 @@
 using JetBrains.Annotations;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class ProceduralMeshCreationTask4 : BaseMeshCreationTask4
+public class ProceduralMeshCreationTask5 : BaseMeshCreationTask5
 {
 
     [Header("Cone")]
@@ -21,16 +22,22 @@ public class ProceduralMeshCreationTask4 : BaseMeshCreationTask4
 
     [Header("Rotation")]
 
-    [SerializeField] protected SecondaryObjectMeshCreationTask4 targetObject;
+    [SerializeField] protected SecondaryObjectMeshCreationTask5 targetObject;
 
     [SerializeField] protected bool useRotation;
 
     [SerializeField] protected Vector3 rotationSpeed;
 
 
+    [Header("Colour Change")]
+
+    [SerializeField] protected Color forwardColour = Color.red;
+    [SerializeField] protected Color backwardColour = Color.blue;
+
+
     private GameObject generatedObject;
     public GameObject GeneratedObject => generatedObject;
-
+    private MeshRenderer generatedObjectRenderer;
 
     protected void Start() {
 
@@ -39,7 +46,15 @@ public class ProceduralMeshCreationTask4 : BaseMeshCreationTask4
 
     protected void Update()
     {
-        if (!useRotation || targetObject.GeneratedObject == null || generatedObject == null) return;
+        // Moved object check to allow for colour change to be separate from rotation
+        if (targetObject.GeneratedObject == null || generatedObject == null) return;
+
+        Vector3 directionToGenerated = generatedObject.transform.position - targetObject.GeneratedObject.transform.position;
+        directionToGenerated.Normalize();
+
+        generatedObjectRenderer.material.color = Vector3.Dot(generatedObject.transform.forward, directionToGenerated) > 0 ? forwardColour : backwardColour;
+
+        if (!useRotation) return;
 
         Vector3 direction = targetObject.GeneratedObject.transform.position - generatedObject.transform.position;
 
@@ -75,8 +90,8 @@ public class ProceduralMeshCreationTask4 : BaseMeshCreationTask4
         MeshFilter meshFilter = generatedObject.AddComponent<MeshFilter>();
         meshFilter.mesh = generatedCustomMesh;
 
-        MeshRenderer meshRenderer = generatedObject.AddComponent<MeshRenderer>();
-        meshRenderer.material = CreateObjectMaterial();
+        generatedObjectRenderer = generatedObject.AddComponent<MeshRenderer>();
+        generatedObjectRenderer.material = CreateObjectMaterial();
 
         if (!useAnimation) return;
 
