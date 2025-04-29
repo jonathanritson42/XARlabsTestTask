@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class SecondaryObjectMeshCreationTask6 : BaseMeshCreationTask6
 {
-    [Tooltip("World position of sphere")]
-    [SerializeField] protected Vector3 spherePositon;
-
     [Tooltip("Colour of sphere")]
     [SerializeField] protected Color sphereColor;
 
@@ -21,6 +18,7 @@ public class SecondaryObjectMeshCreationTask6 : BaseMeshCreationTask6
         // Creating new object
         generatedObject = new GameObject();
         generatedObject.name = "Object B";
+        generatedObject.transform.parent = transform;
 
         // Creating mesh
         Mesh generatedCustomMesh = new Mesh();
@@ -41,7 +39,7 @@ public class SecondaryObjectMeshCreationTask6 : BaseMeshCreationTask6
         if (!useAnimation) return;
 
         lissajousAnimation = generatedObject.AddComponent<LissajousAnimation>();
-        lissajousAnimation.startPosition = spherePositon;
+        lissajousAnimation.startPosition = transform.position;
 
         if (!useRandom) return;
 

@@ -41,8 +41,6 @@ public class ProceduralMeshCreationTask6 : BaseMeshCreationTask6
     private Mesh perlinNoiseMesh;
     private Vector3[] originalVertices;
     private Vector3[] originalNormals;
-    private float currentDisplacement;
-
 
     private GameObject generatedObject;
     public GameObject GeneratedObject => generatedObject;
@@ -93,6 +91,7 @@ public class ProceduralMeshCreationTask6 : BaseMeshCreationTask6
         // Creating new object
         generatedObject = new GameObject();
         generatedObject.name = "Object A";
+        generatedObject.transform.parent = transform;
 
         // Creating mesh
         generatedCustomMesh = new Mesh();
@@ -110,6 +109,7 @@ public class ProceduralMeshCreationTask6 : BaseMeshCreationTask6
         if (!useAnimation) return;
 
         lissajousAnimation = generatedObject.AddComponent<LissajousAnimation>();
+        lissajousAnimation.startPosition = transform.position;
 
         if (!useRandom) return;
 
