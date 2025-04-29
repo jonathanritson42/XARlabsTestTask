@@ -179,8 +179,8 @@ MonoBehaviour:
   forwardColour: {r: 1, g: 0, b: 0, a: 1}
   backwardColour: {r: 0, g: 0, b: 1, a: 1}
   useNoise: 1
-  displacementValue: 0.1
-  noiseValue: 10
+  displacementValue: 0.5
+  noiseValue: 18
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +353,6 @@ MonoBehaviour:
   sphereRadius: 1
   sphereSections: 32
   lissajousAnimation: {fileID: 0}
-  spherePositon: {x: 0, y: 0, z: 0}
   sphereColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &961739749
 GameObject:
